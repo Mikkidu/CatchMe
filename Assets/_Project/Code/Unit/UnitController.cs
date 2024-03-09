@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,6 +10,8 @@ namespace AlexDev.CatchMe
     {
         [SerializeField] private float _patrolAreaSize = 30;
         [SerializeField] private Transform _targetTransform;
+        [SerializeField] private GameObject _taggerMark;
+        [SerializeField] private TextMeshPro _distanceText;
         public AudioClip[] footstepAudioClips;
         public AudioClip landingAudioClip;
 
@@ -122,6 +125,17 @@ namespace AlexDev.CatchMe
         public void OnTagSucces()
         {
             isTagger = false;
+        }
+
+        public void SwitchMark(bool isOn)
+        {
+            _taggerMark?.SetActive(isOn);
+        }
+
+        public void UpdateDistance(float distance)
+        {
+
+            _distanceText.SetText($"{gameObject.name}\n{distance: 0.0}");
         }
 
         #endregion

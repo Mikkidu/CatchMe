@@ -76,6 +76,7 @@ namespace AlexDev.CatchMe
 
         public void Catched()
         {
+            UnitDatabase.SetTagger(_controller.transform);
             _waitCoroutine = _controller.StartCoroutine(ChangeStateCoroutine());
         }
 

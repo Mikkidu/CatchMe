@@ -18,15 +18,12 @@ namespace AlexDev.CatchMe
 
         private void OnTriggerEnter(Collider other)
         {
-            if (((1 << other.gameObject.layer) & _excludeLayers.value) == 0)
+            if (other.TryGetComponent<Tagging>(out var enemyTagger) && enemyTagger != _tagger)
             {
-                if (other.TryGetComponent<Tagging>(out var enemyTagger))
-                {
-                    enemyTagger.Catched();
-                    Debug.Log(gameObject.name + " Initialize " + _tagger.name);
-                    _tagger.OnTagSucces();
-                    transform.parent.gameObject.SetActive(false);
-                }
+                enemyTagger.Catched();
+                Debug.Log(gameObject.name + " Initialize " + _tagger.name);
+                _tagger.OnTagSucces();
+                transform.parent.gameObject.SetActive(false);
             }
         }
     }
