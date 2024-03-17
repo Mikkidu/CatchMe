@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace AlexDev.CatchMe.UI
 {
-    public class MainMenuUI : MonoBehaviour
+    public class MainMenuUI : MonoBehaviour, IConnectionAware
     {
         #region Private Serializable Fields
 
@@ -22,30 +22,44 @@ namespace AlexDev.CatchMe.UI
 
         #region Events
 
-        public event Action OnNewGameButtonUIEvent;
-        public event Action OnJoinByIDButtonUIEvent;
-        public event Action OnJoinRandomButtonUIEvent;
+        public event Action NewGameButtonPressedEvent;
+        public event Action JoinByIDButtonPressedEvent;
+        public event Action JoinRandomButtonPresedEvent;
 
-        public event Action<string> OnPlayerNameChangedEvent;
+        public event Action<string> PlayerNameChangedEvent;
+        public event Action<bool> ConnectionStateChangedEvent;
 
         #endregion
 
+        #region MonoBehaviour Methods
+
+        private void Awake()
+        {
+            
+        }
+
+        #endregion
 
         #region Public methods
 
+        public void OnConnectionChanged(bool isConnected)
+        {
+            throw new NotImplementedException();
+        }
+
         public void OnNewGameButton()
         {
-            OnNewGameButtonUIEvent?.Invoke();
+            NewGameButtonPressedEvent?.Invoke();
         }
 
         public void OnJoinByIDButton()
         {
-            OnJoinByIDButtonUIEvent?.Invoke();
+            JoinByIDButtonPressedEvent?.Invoke();
         }
 
         public void OnJoinRandomButton()
         {
-            OnJoinRandomButtonUIEvent?.Invoke();
+            JoinRandomButtonPresedEvent?.Invoke();
         }
 
         public void ToggleInteractableAllGameButtons(bool isOn)
@@ -80,7 +94,7 @@ namespace AlexDev.CatchMe.UI
 
         private void OnPlayerNameChanged(string newName)
         {
-            OnPlayerNameChangedEvent?.Invoke(newName);
+            PlayerNameChangedEvent?.Invoke(newName);
             _playerNamePanelUI.OnConfirmingTextEvent -= OnPlayerNameChanged;
             SwitchPanels(_playerNamePanelUI.transform.parent.gameObject, _menuPanelUI.gameObject);
         }

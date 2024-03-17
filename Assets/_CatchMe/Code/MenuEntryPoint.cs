@@ -1,6 +1,6 @@
 using UnityEngine;
 using AlexDev.CatchMe.UI;
-using AlexDev.CatchMe.Networking;
+using AlexDev.Networking;
 
 namespace AlexDev.CatchMe
 {

@@ -2,8 +2,9 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
+using AlexDev.Observer;
 
-namespace AlexDev.CatchMe.Networking
+namespace AlexDev.Networking
 {
     public class Launcher : MonoBehaviourPunCallbacks
     {
@@ -29,6 +30,7 @@ namespace AlexDev.CatchMe.Networking
 
         #region Public Fields
 
+        public ObservableVariable<string> statusMessages;
         public bool IsConnected { get; private set; } = false;
 
         #endregion
@@ -43,6 +45,7 @@ namespace AlexDev.CatchMe.Networking
 
         void Awake()
         {
+            statusMessages = new ObservableVariable<string>();
             // #Critical
             // this makes sure we can use PhotonNetwork.LoadLevel() on the master client and all clients in the same room sync their level automatically
             PhotonNetwork.AutomaticallySyncScene = true;
@@ -59,14 +62,15 @@ namespace AlexDev.CatchMe.Networking
 
         public override void OnConnectedToMaster()
         {
-            Debug.Log("PUN Basics Tutorial/Launcher: OnConnectedToMaster() was called by PUN");
-            //PhotonNetwork.JoinRandomRoom();
+
+            statusMessages.Value = "Connected to Master";
             IsConnected = true;
             OnIsConnectedChangeEvent?.Invoke(IsConnected);
         }
 
         public override void OnDisconnected(DisconnectCause cause)
         {
+            statusMessages.Value = $"<color=#ff0000ff>Disconnected from Master</color> {cause}";
             Debug.LogWarningFormat("PUN Basics Tutorial/Launcher: OnDisconnected() was called by PUN with reason {0}", cause);
             IsConnected = false;
             OnIsConnectedChangeEvent?.Invoke(IsConnected);
@@ -74,6 +78,7 @@ namespace AlexDev.CatchMe.Networking
 
         public override void OnJoinRandomFailed(short returnCode, string message)
         {
+            statusMessages.Value = "<color=#ff0000ff>Can't join random room</color>";
             Debug.Log("PUN Basics Tutorial/Launcher:OnJoinRandomFailed() was called by PUN. No random room available, so we create one.\nCalling: PhotonNetwork.CreateRoom");
 
             // #Critical: we failed to join a random room, maybe none exists or they are all full. No worries, we create a new room.
@@ -82,6 +87,7 @@ namespace AlexDev.CatchMe.Networking
 
         public override void OnJoinedRoom()
         {
+            statusMessages.Value = "Joined room";
             Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
         }
 
@@ -107,6 +113,11 @@ namespace AlexDev.CatchMe.Networking
                 PhotonNetwork.ConnectUsingSettings();
                 PhotonNetwork.GameVersion = gameVersion;
             }
+        }
+
+        public void SetPlayerNickName(string nickName)
+        {
+            PhotonNetwork.NickName = nickName;
         }
 
         public void JoinRandomRoom()

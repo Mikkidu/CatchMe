@@ -1,5 +1,5 @@
 using AlexDev.CatchMe.UI;
-using AlexDev.CatchMe.Networking;
+using AlexDev.Networking;
 using AlexDev.CatchMe.Data;
 using UnityEngine;
 
@@ -45,14 +45,16 @@ namespace AlexDev.CatchMe
             settingsUI.OnSaveSettingsEvent += _dataManager.SaveGameSettings;
             
 
-            _mainMenuUI.OnNewGameButtonUIEvent += _launcher.CreateRoom;
-            _mainMenuUI.OnJoinRandomButtonUIEvent += _launcher.JoinRandomRoom;
+            _mainMenuUI.NewGameButtonPressedEvent += _launcher.CreateRoom;
+            _mainMenuUI.JoinRandomButtonPresedEvent += _launcher.JoinRandomRoom;
 
             _launcher.OnIsConnectedChangeEvent += OnIsConnectedChange;
-            _mainMenuUI.OnPlayerNameChangedEvent += ChangePlayerName;
+            _launcher.SetPlayerNickName(_dataManager.playerSettings.playerName);
+            MessageViewerUI.instance?.AddObservable(_launcher.statusMessages);
 
             if (_dataManager.isNewPlayerData)
             {
+                _mainMenuUI.PlayerNameChangedEvent += ChangePlayerName;
                 _mainMenuUI.ShowPlayerNameInputPanel(_dataManager.playerSettings.playerName);
             }
         }
@@ -70,6 +72,7 @@ namespace AlexDev.CatchMe
         private void ChangePlayerName(string newName)
         {
             _dataManager.playerSettings.playerName = newName;
+            _launcher.SetPlayerNickName(newName);
             _dataManager.SavePlayerSettings();
         }
 
