@@ -4,7 +4,14 @@ namespace AlexDev.Observer
 {
     public abstract class ObserverAbstract : IObserver
     {
+
+        #region Private Fields
+
         private List<IObservable> _observables;
+
+        #endregion
+
+        #region Public Fields
 
         public ObserverAbstract()
         {
@@ -26,7 +33,7 @@ namespace AlexDev.Observer
             }
         }
 
-        public void AddObservable(IObservable observable)
+        public void AddObservableVariable(IObservable observable)
         {
             _observables.Add(observable);
             observable.ChangedEvent += OnChanged;
@@ -40,7 +47,12 @@ namespace AlexDev.Observer
             }
         }
 
+        #endregion
+
+        #region Protected Fields
+
         protected abstract void OnChanged(object o);
 
+        #endregion
     }
 }

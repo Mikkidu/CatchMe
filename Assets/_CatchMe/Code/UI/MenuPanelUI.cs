@@ -8,9 +8,9 @@ namespace AlexDev.CatchMe.UI
 
         #region Private Serialize Fields
 
-            [SerializeField] private Button _newGameButton;
-            [SerializeField] private Button _joinByIDButton;
-            [SerializeField] private Button _joinRandomButton;
+        [SerializeField] private Button _newGameButton;
+        [SerializeField] private Button _joinByIDButton;
+        [SerializeField] private Button _joinRandomButton;
 
         #endregion
 
@@ -25,11 +25,6 @@ namespace AlexDev.CatchMe.UI
         public void Initialize(MainMenuUI mainMenuUI)
         {
             _mainMenuUI = mainMenuUI;
-        }
-
-        public void OnNewGameButton()
-        {
-            _mainMenuUI.OnNewGameButton();
         }
 
         public void OnJoinByIDButton()

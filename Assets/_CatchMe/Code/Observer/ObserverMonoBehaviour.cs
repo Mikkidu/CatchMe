@@ -7,7 +7,7 @@ namespace AlexDev.Observer
     {
         private List<IObservable> _observables = new List<IObservable>();
 
-        public void AddObservable(IObservable observable)
+        public void AddObservableVariable(IObservable observable)
         {
             _observables.Add(observable);
             observable.ChangedEvent += OnChanged;

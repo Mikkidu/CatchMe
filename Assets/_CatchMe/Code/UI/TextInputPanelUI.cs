@@ -31,9 +31,10 @@ namespace AlexDev.CatchMe.UI
             }
         }
 
-        public void OnApplyButton()
+        public void OnApplied()
         {
             OnConfirmingTextEvent?.Invoke(_inputField.text);
+            Debug.Log("Applied " + OnConfirmingTextEvent.GetInvocationList().Length);
         }
 
         public void SetPlaseholderText(string text)

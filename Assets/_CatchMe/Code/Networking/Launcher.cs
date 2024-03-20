@@ -3,6 +3,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using System;
 using AlexDev.Observer;
+using System.Collections.Generic;
 
 namespace AlexDev.Networking
 {
@@ -24,20 +25,22 @@ namespace AlexDev.Networking
         /// <summary>
         /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
         /// </summary>
-        string gameVersion = "1";
+        private string gameVersion = "1";
+
 
         #endregion
 
         #region Public Fields
 
         public ObservableVariable<string> statusMessages;
-        public bool IsConnected { get; private set; } = false;
+        public bool IsConnectedToLobby { get; private set; } = false;
 
         #endregion
 
         #region Events
 
-        public event Action<bool> OnIsConnectedChangeEvent;
+        public event Action<bool> ConnectionStatusChangedEvent;
+        public event Action<List<RoomInfo>> RoomListUpdatedEvent;
 
         #endregion
 
@@ -62,18 +65,23 @@ namespace AlexDev.Networking
 
         public override void OnConnectedToMaster()
         {
-
             statusMessages.Value = "Connected to Master";
-            IsConnected = true;
-            OnIsConnectedChangeEvent?.Invoke(IsConnected);
+            PhotonNetwork.JoinLobby();
+        }
+
+        public override void OnJoinedLobby()
+        {
+            statusMessages.Value = "Connected to Lobby";
+            IsConnectedToLobby = true;
+            ConnectionStatusChangedEvent?.Invoke(IsConnectedToLobby);
         }
 
         public override void OnDisconnected(DisconnectCause cause)
         {
             statusMessages.Value = $"<color=#ff0000ff>Disconnected from Master</color> {cause}";
             Debug.LogWarningFormat("PUN Basics Tutorial/Launcher: OnDisconnected() was called by PUN with reason {0}", cause);
-            IsConnected = false;
-            OnIsConnectedChangeEvent?.Invoke(IsConnected);
+            IsConnectedToLobby = false;
+            ConnectionStatusChangedEvent?.Invoke(IsConnectedToLobby);
         }
 
         public override void OnJoinRandomFailed(short returnCode, string message)
@@ -89,6 +97,12 @@ namespace AlexDev.Networking
         {
             statusMessages.Value = "Joined room";
             Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
+        }
+
+        public override void OnRoomListUpdate(List<RoomInfo> roomList)
+        {
+            if (roomList.Count == 0) return;
+            RoomListUpdatedEvent?.Invoke(roomList);
         }
 
         #endregion
@@ -126,9 +140,9 @@ namespace AlexDev.Networking
             PhotonNetwork.JoinRandomRoom();
         }
 
-        public void CreateRoom()
+        public void CreateRoom(string roomName)
         {
-            PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayersPerRoom });
+            PhotonNetwork.CreateRoom(roomName, new RoomOptions { MaxPlayers = maxPlayersPerRoom, IsOpen = true, PublishUserId = true });
         }
 
         #endregion

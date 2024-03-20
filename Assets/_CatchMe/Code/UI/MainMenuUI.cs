@@ -11,31 +11,39 @@ namespace AlexDev.CatchMe.UI
         [SerializeField] private MenuPanelUI _menuPanelUI;
         [SerializeField] private SettingsPanelUI _settingsPanelUI;
         [SerializeField] private TextInputPanelUI _playerNamePanelUI;
+        [SerializeField] private TextInputPanelUI _roomNamePanelUI;
+        [SerializeField] private RoomTableUI _roomTableUI;
 
         #endregion
 
         #region Public Fields
 
         public SettingsPanelUI GetSettingsPanelUI => _settingsPanelUI;
+        public RoomTableUI RoomTable => _roomTableUI;
 
         #endregion
 
         #region Events
 
-        public event Action NewGameButtonPressedEvent;
         public event Action JoinByIDButtonPressedEvent;
         public event Action JoinRandomButtonPresedEvent;
 
         public event Action<string> PlayerNameChangedEvent;
+        public event Action<string> RoomNameEnteredEvent;
         public event Action<bool> ConnectionStateChangedEvent;
 
         #endregion
 
-        #region MonoBehaviour Methods
+        #region MonoBehaviour CallBacks
 
-        private void Awake()
+        private void Start()
         {
-            
+            _roomNamePanelUI.OnConfirmingTextEvent += OnRoomNameEntered;
+        }
+
+        private void OnDisable()
+        {
+            _roomNamePanelUI.OnConfirmingTextEvent -= OnRoomNameEntered;
         }
 
         #endregion
@@ -45,11 +53,6 @@ namespace AlexDev.CatchMe.UI
         public void OnConnectionChanged(bool isConnected)
         {
             throw new NotImplementedException();
-        }
-
-        public void OnNewGameButton()
-        {
-            NewGameButtonPressedEvent?.Invoke();
         }
 
         public void OnJoinByIDButton()
@@ -86,17 +89,9 @@ namespace AlexDev.CatchMe.UI
 
         public void ShowPlayerNameInputPanel(string currentName)
         {
-            Debug.Log("Show input name");
             _playerNamePanelUI.SetPlaseholderText(currentName);
-            _playerNamePanelUI.OnConfirmingTextEvent += OnPlayerNameChanged;
+            _playerNamePanelUI.OnConfirmingTextEvent += PlayerNameChangedEvent;
             SwitchPanels(_menuPanelUI.gameObject, _playerNamePanelUI.transform.parent.gameObject);
-        }
-
-        private void OnPlayerNameChanged(string newName)
-        {
-            PlayerNameChangedEvent?.Invoke(newName);
-            _playerNamePanelUI.OnConfirmingTextEvent -= OnPlayerNameChanged;
-            SwitchPanels(_playerNamePanelUI.transform.parent.gameObject, _menuPanelUI.gameObject);
         }
 
         #endregion
@@ -107,6 +102,11 @@ namespace AlexDev.CatchMe.UI
         {
             fromPanel.SetActive(false);
             toPanel.SetActive(true);
+        }
+
+        private void OnRoomNameEntered(string roomName)
+        {
+            RoomNameEnteredEvent?.Invoke(roomName);
         }
 
         #endregion

@@ -4,6 +4,6 @@ namespace AlexDev.Observer
 {
     public interface IObserver : IDisposable
     {
-        void AddObservable(IObservable observable);
+        void AddObservableVariable(IObservable observable);
     }
 }

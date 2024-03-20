@@ -17,11 +17,11 @@ namespace AlexDev.CatchMe
 
         #region Events
 
-        public event Action<bool> OnMusicToggleChangeEvent;
-        public event Action<bool> OnSfxToggleChangeEvent;
-        public event Action<float> OnMusicVolumeChangeEvent;
-        public event Action<float> OnSfxVolumeChangeEvent;
-        public event Action OnSaveSettingsEvent;
+        public event Action<bool> MusicToggleChangedEvent;
+        public event Action<bool> SfxToggleChangedEvent;
+        public event Action<float> MusicVolumeChangedEvent;
+        public event Action<float> SfxVolumeChangedEvent;
+        public event Action SettingsSavedEvent;
 
         #endregion
 
@@ -38,28 +38,28 @@ namespace AlexDev.CatchMe
 
         public void OnMusicToggleChange(bool isOn)
         {
-            OnMusicToggleChangeEvent?.Invoke(isOn);
+            MusicToggleChangedEvent?.Invoke(isOn);
         }
 
         public void OnSfxToggleChange(bool isOn)
         {
-            OnSfxToggleChangeEvent?.Invoke(isOn);
+            SfxToggleChangedEvent?.Invoke(isOn);
         }
 
         public void OnMusicVolumeChange(float volume)
         {
-            OnMusicVolumeChangeEvent?.Invoke(volume);
+            MusicVolumeChangedEvent?.Invoke(volume);
         }
 
 
         public void OnSfxVolumeChange(float volume)
         {
-            OnSfxVolumeChangeEvent?.Invoke(volume);
+            SfxVolumeChangedEvent?.Invoke(volume);
         }
 
         public void SaveSettings()
         {
-            OnSaveSettingsEvent?.Invoke();
+            SettingsSavedEvent?.Invoke();
         }
 
         #endregion
