@@ -65,7 +65,6 @@ namespace AlexDev.Networking
 
         public override void OnConnectedToMaster()
         {
-            statusMessages.Value = "Connected to Master";
             PhotonNetwork.JoinLobby();
         }
 
@@ -78,8 +77,6 @@ namespace AlexDev.Networking
 
         public override void OnDisconnected(DisconnectCause cause)
         {
-            statusMessages.Value = $"<color=#ff0000ff>Disconnected from Master</color> {cause}";
-            Debug.LogWarningFormat("PUN Basics Tutorial/Launcher: OnDisconnected() was called by PUN with reason {0}", cause);
             IsConnectedToLobby = false;
             ConnectionStatusChangedEvent?.Invoke(IsConnectedToLobby);
         }

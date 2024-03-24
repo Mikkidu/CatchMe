@@ -1,6 +1,7 @@
 using UnityEngine;
 using AlexDev.CatchMe.UI;
 using AlexDev.Networking;
+using UnityEngine.SceneManagement;
 
 namespace AlexDev.CatchMe
 {
@@ -29,6 +30,7 @@ namespace AlexDev.CatchMe
 
         private void Awake()
         {
+            SceneManager.LoadSceneAsync("ConnectionManager", LoadSceneMode.Additive);
             menuController = new MainMenuController(_mainMenuUI, _launcher);
         }
 

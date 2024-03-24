@@ -20,7 +20,7 @@ namespace AlexDev.CatchMe.UI
 
         public void RefreshRoom(int roomIndex, int playerCount)
         {
-            _roomsList.Find(room => room.GetRoomIndex == roomIndex).RefreshStats(playerCount);
+            _roomsList.Find(slot => slot.GetRoomIndex == roomIndex).RefreshStats(playerCount);
         }
 
         public void RemoveRoom(int roomIndex)

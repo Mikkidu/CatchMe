@@ -58,7 +58,7 @@ namespace AlexDev.CatchMe
             _launcher.ConnectionStatusChangedEvent += OnIsConnectedChange;
             _launcher.RoomListUpdatedEvent += _roomsBase.RefreshRoomList;
             _launcher.SetPlayerNickName(_dataManager.playerSettings.playerName);
-            MessageViewerUI.instance?.AddObservableVariable(_launcher.statusMessages);
+            NetworkStateUI.instance?.AddObservableVariable(_launcher.statusMessages);
 
 
             if (_dataManager.isNewPlayerData)

@@ -5,7 +5,15 @@ namespace AlexDev.Observer
 {
     public abstract class ObserverMonoBehaviour : MonoBehaviour, IObserver
     {
+
+        #region Private Fields
+
         private List<IObservable> _observables = new List<IObservable>();
+
+        #endregion
+
+
+        #region Public Methods
 
         public void AddObservableVariable(IObservable observable)
         {
@@ -21,7 +29,13 @@ namespace AlexDev.Observer
             }
         }
 
+        #endregion
+
+        #region Protected Fields
+
         protected abstract void OnChanged(object o);
+
+        #endregion
 
     }
 }
