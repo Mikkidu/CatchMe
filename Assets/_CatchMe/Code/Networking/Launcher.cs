@@ -64,7 +64,7 @@ namespace AlexDev.Networking
         #region MonoBehaviourPunCallbacks Callbacks
 
         public override void OnConnectedToMaster()
-        {
+        {   
             PhotonNetwork.JoinLobby();
         }
 

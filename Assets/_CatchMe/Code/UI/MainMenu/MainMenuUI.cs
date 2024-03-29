@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace AlexDev.CatchMe.UI
 {
@@ -13,6 +12,7 @@ namespace AlexDev.CatchMe.UI
         [SerializeField] private TextInputPanelUI _playerNamePanelUI;
         [SerializeField] private TextInputPanelUI _roomNamePanelUI;
         [SerializeField] private RoomTableUI _roomTableUI;
+        [SerializeField] private RoomMenuUI _roomMenuUI;
 
         #endregion
 
@@ -27,6 +27,8 @@ namespace AlexDev.CatchMe.UI
 
         public event Action JoinByIDButtonPressedEvent;
         public event Action JoinRandomButtonPresedEvent;
+        public event Action StartGameButtonPressedEvent;
+        public event Action LeaveRoomButtonPressedEvent;
 
         public event Action<string> PlayerNameChangedEvent;
         public event Action<string> RoomNameEnteredEvent;
@@ -65,6 +67,16 @@ namespace AlexDev.CatchMe.UI
             JoinRandomButtonPresedEvent?.Invoke();
         }
 
+        public void OnStartGameButtonPressed()
+        {
+            StartGameButtonPressedEvent?.Invoke();
+        }
+
+        public void OnLeaveRoomButtonPressed()
+        {
+            LeaveRoomButtonPressedEvent?.Invoke();
+        }
+
         public void ToggleInteractableAllGameButtons(bool isOn)
         {
             ToggleInteractableOfNewGameButton(isOn);
@@ -92,6 +104,12 @@ namespace AlexDev.CatchMe.UI
             _playerNamePanelUI.SetPlaseholderText(currentName);
             _playerNamePanelUI.OnConfirmingTextEvent += PlayerNameChangedEvent;
             SwitchPanels(_menuPanelUI.gameObject, _playerNamePanelUI.transform.parent.gameObject);
+        }
+
+        public void ShowRoomUI()
+        {
+            _roomMenuUI.gameObject.SetActive(true);
+            _roomTableUI.gameObject.SetActive(true);
         }
 
         #endregion

@@ -14,6 +14,7 @@ namespace AlexDev.CatchMe
         private DataManager _dataManager;
         private AudioController _audioController;
         private RoomsBase _roomsBase;
+        private GameManager _gameManager;
 
         #endregion
 
@@ -87,8 +88,14 @@ namespace AlexDev.CatchMe
 
         private void CreateRoom(string roomaName)
         {
-            Debug.Log("Main menu controller: create room");
+            Debug.Log("Main menu controller: create room " + roomaName);
+            _gameManager = new GameManager(_mainMenuUI);
             _launcher.CreateRoom(roomaName);
+        }
+
+        ~MainMenuController()
+        {
+            Debug.Log("MainMenu unloaded");
         }
 
         #endregion

@@ -1,7 +1,3 @@
-using System;
-
-using UnityEngine;
-
 using Photon.Pun;
 using Photon.Realtime;
 
@@ -87,5 +83,6 @@ namespace AlexDev.Networking
         }
 
         #endregion
+
     }
 }

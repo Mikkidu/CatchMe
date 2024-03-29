@@ -1,6 +1,5 @@
 using AlexDev.CatchMe.Data;
 using AlexDev.CatchMe.Audio;
-using UnityEngine;
 
 namespace AlexDev.CatchMe
 {
