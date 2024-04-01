@@ -1219,7 +1219,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rightArmPrototype: {fileID: 8377560597102571544}
-  _taggingInterval: 1
   _taggingpeed: 12
 --- !u!195 &2620328068634774194
 NavMeshAgent:
@@ -1257,6 +1256,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _patrolAreaSize: 60
   _targetTransform: {fileID: 0}
+  _taggerMark: {fileID: 0}
+  _distanceText: {fileID: 0}
   footstepAudioClips:
   - {fileID: 8300000, guid: 72f526a6a9890f643a88e85a61c86c8a, type: 3}
   - {fileID: 8300000, guid: 85016e0f2b01da248b9663dd49a161b0, type: 3}
@@ -1975,7 +1976,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8377560597102571544
 Transform:
   m_ObjectHideFlags: 0

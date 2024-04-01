@@ -40,6 +40,8 @@ namespace AlexDev.CatchMe.UI
 
         private void Start()
         {
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
             _roomNamePanelUI.OnConfirmingTextEvent += OnRoomNameEntered;
         }
 

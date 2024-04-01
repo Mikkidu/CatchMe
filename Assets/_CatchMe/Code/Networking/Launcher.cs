@@ -39,6 +39,7 @@ namespace AlexDev.Networking
 
         #region Events
 
+        public event Action JoinedRoomEvent;
         public event Action<bool> ConnectionStatusChangedEvent;
         public event Action<List<RoomInfo>> RoomListUpdatedEvent;
 
@@ -92,6 +93,7 @@ namespace AlexDev.Networking
 
         public override void OnJoinedRoom()
         {
+            JoinedRoomEvent?.Invoke();
             statusMessages.Value = "Joined room";
             Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
         }

@@ -63,6 +63,7 @@ namespace AlexDev.CatchMe
             {
                 ShowGameMenu();
                 Cursor.lockState = CursorLockMode.Confined;
+                Cursor.visible = true;
             }
         }
 

@@ -58,6 +58,7 @@ namespace AlexDev.CatchMe
 
             _launcher.ConnectionStatusChangedEvent += OnIsConnectedChange;
             _launcher.RoomListUpdatedEvent += _roomsBase.RefreshRoomList;
+            _launcher.JoinedRoomEvent += CreateGameManager;
             _launcher.SetPlayerNickName(_dataManager.playerSettings.playerName);
             NetworkStateUI.instance?.AddObservableVariable(_launcher.statusMessages);
 
@@ -89,8 +90,12 @@ namespace AlexDev.CatchMe
         private void CreateRoom(string roomaName)
         {
             Debug.Log("Main menu controller: create room " + roomaName);
-            _gameManager = new GameManager(_mainMenuUI);
             _launcher.CreateRoom(roomaName);
+        }
+
+        private void CreateGameManager()
+        {
+            _gameManager = new GameManager(_mainMenuUI);
         }
 
         ~MainMenuController()

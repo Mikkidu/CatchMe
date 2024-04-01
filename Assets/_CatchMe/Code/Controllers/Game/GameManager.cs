@@ -20,23 +20,23 @@ namespace AlexDev.CatchMe
             _mainMenuUI = mainMenuUI;
             _roomManager = new GameObject("RoomManager", typeof(RoomManager)).GetComponent<RoomManager>();
             _roomManager.AwakePhaseCompletedEvent += Initialize;
+            SwitchToRoomUI();
         }
 
         #region Public Methods
 
         public void Initialize()
         {
-            _roomManager.RoomEnteredEvent += SwitchToRoomUI;
             _roomManager.RoomLeftEvent += LoadMainMenu;
             _mainMenuUI.StartGameButtonPressedEvent += LoadGameScene;
             _mainMenuUI.LeaveRoomButtonPressedEvent += CloseRoomInMainMenu;
             if (GameUI.IsInitialized)
             {
-                SubscribeForGameObjects();
+                OnGameSceneLoaded();
             }
             else
             {
-                GameUI.AwakePhaseCompletedEvent += SubscribeForGameObjects;
+                GameUI.AwakePhaseCompletedEvent += OnGameSceneLoaded;
             }
         }
 
@@ -48,6 +48,7 @@ namespace AlexDev.CatchMe
         public void LoadMainMenu()
         {
             _roomManager.LoadLevel("MainMenu");
+            SelfDestroy();
         }
 
         public void LoadGameScene()
@@ -58,6 +59,12 @@ namespace AlexDev.CatchMe
         #endregion
 
         #region Private Methods
+
+        private void OnGameSceneLoaded()
+        {
+            SpawnManager.instance.SpawnPlayer(0);
+            SubscribeForGameObjects();
+        }
 
         private void SubscribeForGameObjects()
         {
@@ -78,17 +85,17 @@ namespace AlexDev.CatchMe
 
         private void SelfDestroy()
         {
+            Debug.Log(this + " SelfDestroing");
             if (GameUI.IsInitialized)
             {
                 GameUI.instance.ExitButtonPressedEvent -= LeaveRoom;
             }
             GameUI.AwakePhaseCompletedEvent -= SubscribeForGameObjects;
             _roomManager.AwakePhaseCompletedEvent -= Initialize;
-            _roomManager.RoomEnteredEvent -= SwitchToRoomUI;
             _roomManager.RoomLeftEvent -= LoadMainMenu;
             _mainMenuUI.StartGameButtonPressedEvent -= LoadGameScene;
             _mainMenuUI.LeaveRoomButtonPressedEvent -= CloseRoomInMainMenu;
-            
+            _roomManager.SelfDestroy();
         }
 
         #endregion
