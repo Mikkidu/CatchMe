@@ -45,7 +45,6 @@ namespace AlexDev.CatchMe
             var agent = GetComponent<NavMeshAgent>();
             var animator = GetComponent<Animator>();
             _tagger = GetComponent<Tagging>();
-            //enemyTargetsList = new List<Transform>();
 
             _movementController = new UnitMovementController(agent);
             _animationController = new UnitAnimationController(this, animator);
@@ -124,6 +123,7 @@ namespace AlexDev.CatchMe
 
         public void OnTagSucces()
         {
+            Debug.Log(name + "Not tagger animore");
             isTagger = false;
         }
 
@@ -135,7 +135,7 @@ namespace AlexDev.CatchMe
         public void UpdateDistance(float distance)
         {
 
-            _distanceText.SetText($"{gameObject.name}\n{distance: 0.0}");
+            _distanceText?.SetText($"{gameObject.name}\n{distance: 0.0}");
         }
 
         #endregion

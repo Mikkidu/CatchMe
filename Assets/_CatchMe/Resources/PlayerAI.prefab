@@ -1195,7 +1195,7 @@ Animator:
   m_GameObject: {fileID: 4332363975584510895}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 36078ab0369161e49a29d349ae3e0739, type: 3}
-  m_Controller: {fileID: 9100000, guid: 40db3173a05ae3242b1c182a09b0a183, type: 2}
+  m_Controller: {fileID: 9100000, guid: 459cbd844cb67fd44aba0d978fbf8234, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1219,6 +1219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rightArmPrototype: {fileID: 8377560597102571544}
+  _hitBox: {fileID: 0}
   _taggingpeed: 12
 --- !u!195 &2620328068634774194
 NavMeshAgent:
