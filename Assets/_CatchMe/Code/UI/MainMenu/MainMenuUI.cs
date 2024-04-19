@@ -10,9 +10,15 @@ namespace AlexDev.CatchMe.UI
         [SerializeField] private MenuPanelUI _menuPanelUI;
         [SerializeField] private SettingsPanelUI _settingsPanelUI;
         [SerializeField] private TextInputPanelUI _playerNamePanelUI;
-        [SerializeField] private TextInputPanelUI _roomNamePanelUI;
+        [SerializeField] private TextInputPanelUI _newRoomNamePanelUI;
+        [SerializeField] private TextInputPanelUI _joinRoomNamePanelUI;
         [SerializeField] private RoomTableUI _roomTableUI;
         [SerializeField] private RoomMenuUI _roomMenuUI;
+
+        #endregion
+        #region Private Fields
+
+        private GameObject _loadingScreen;
 
         #endregion
 
@@ -25,13 +31,13 @@ namespace AlexDev.CatchMe.UI
 
         #region Events
 
-        public event Action JoinByIDButtonPressedEvent;
         public event Action JoinRandomButtonPresedEvent;
         public event Action StartGameButtonPressedEvent;
         public event Action LeaveRoomButtonPressedEvent;
 
         public event Action<string> PlayerNameChangedEvent;
-        public event Action<string> RoomNameEnteredEvent;
+        public event Action<string> NewRoomNameEnteredEvent;
+        public event Action<string> JoinRoomNameEnteredEvent;
         public event Action<bool> ConnectionStateChangedEvent;
 
         #endregion
@@ -40,14 +46,16 @@ namespace AlexDev.CatchMe.UI
 
         private void Start()
         {
+            _loadingScreen = NetworkStateUI.instance.GetLoadingScreen;
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = true;
-            _roomNamePanelUI.OnConfirmingTextEvent += OnRoomNameEntered;
+            _newRoomNamePanelUI.OnConfirmingTextEvent += OnNewRoomNameEntered;
+            _joinRoomNamePanelUI.OnConfirmingTextEvent += OnJoinRoomNameEntered;
         }
 
         private void OnDisable()
         {
-            _roomNamePanelUI.OnConfirmingTextEvent -= OnRoomNameEntered;
+            _newRoomNamePanelUI.OnConfirmingTextEvent -= OnNewRoomNameEntered;
         }
 
         #endregion
@@ -59,9 +67,9 @@ namespace AlexDev.CatchMe.UI
             throw new NotImplementedException();
         }
 
-        public void OnJoinByIDButton()
+        public void OnJoinRoomNameEntered(string roomName)
         {
-            JoinByIDButtonPressedEvent?.Invoke();
+            JoinRoomNameEnteredEvent?.Invoke(roomName);
         }
 
         public void OnJoinRandomButton()
@@ -110,8 +118,31 @@ namespace AlexDev.CatchMe.UI
 
         public void ShowRoomUI()
         {
+            _loadingScreen.SetActive(false);
             _roomMenuUI.gameObject.SetActive(true);
             _roomTableUI.gameObject.SetActive(true);
+        }
+
+        public void ShowMainMenuPanel()
+        {
+            _loadingScreen.SetActive(false);
+            _menuPanelUI.gameObject.SetActive(true);
+            _roomTableUI.gameObject.SetActive(true);
+        }
+
+        public void ShowLoadingScreen()
+        {
+            _loadingScreen.SetActive(true);
+            HideAllPanels();
+        }
+
+        public void HideAllPanels()
+        {
+            int childCount = transform.childCount;
+            for (int i = 0; i < childCount; i++)
+            {
+                transform.GetChild(i).gameObject.SetActive(false);
+            }
         }
 
         #endregion
@@ -124,9 +155,9 @@ namespace AlexDev.CatchMe.UI
             toPanel.SetActive(true);
         }
 
-        private void OnRoomNameEntered(string roomName)
+        private void OnNewRoomNameEntered(string roomName)
         {
-            RoomNameEnteredEvent?.Invoke(roomName);
+            NewRoomNameEnteredEvent?.Invoke(roomName);
         }
 
         #endregion

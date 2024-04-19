@@ -9,7 +9,7 @@ namespace AlexDev.CatchMe.UI
         #region Private Serialize Fields
 
         [SerializeField] private Button _newGameButton;
-        [SerializeField] private Button _joinByIDButton;
+        [SerializeField] private Button _joinByNameButton;
         [SerializeField] private Button _joinRandomButton;
 
         #endregion
@@ -25,11 +25,6 @@ namespace AlexDev.CatchMe.UI
         public void Initialize(MainMenuUI mainMenuUI)
         {
             _mainMenuUI = mainMenuUI;
-        }
-
-        public void OnJoinByIDButton()
-        {
-            _mainMenuUI.OnJoinByIDButton();
         }
 
         public void OnJoinRandomButton()
@@ -52,9 +47,9 @@ namespace AlexDev.CatchMe.UI
 
         public void ToggleInteractableOfjoinByIDButton(bool isOn)
         {
-            if (_joinByIDButton == null) return;
+            if (_joinByNameButton == null) return;
 
-            _joinByIDButton.interactable = isOn;
+            _joinByNameButton.interactable = isOn;
         }
 
         public void ToggleInteractableOfJoinRandomButton(bool isOn)

@@ -15,12 +15,15 @@ namespace AlexDev.CatchMe.UI
 
         public UnityEvent ReconnectButtonPressedEvent;
 
+        public GameObject GetLoadingScreen { get { return _loadingScreenPanel; } }
+
         #endregion
 
         #region Serialize PrivateFields
 
         [SerializeField] private TextMeshProUGUI _messagesText;
         [SerializeField] private GameObject _reconnectButton;
+        [SerializeField] private GameObject _loadingScreenPanel;
 
         #endregion
 

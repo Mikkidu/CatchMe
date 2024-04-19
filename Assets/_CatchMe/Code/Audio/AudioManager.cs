@@ -107,13 +107,13 @@ namespace AlexDev.CatchMe.Audio
         public void SwitchOnMusic(bool isOn)
         {
             isMusicOn = isOn;
-            _mixer.SetFloat(SETTINGS_VOLUME_MUSIC, Mathf.Log10(currentMusicVolume * (isOn ? 1 : 0.001f)) * 20);
+            _mixer.SetFloat(SETTINGS_VOLUME_MUSIC, Mathf.Log10(currentMusicVolume * (isOn ? 1 : 0.00001f)) * 20);
         }
 
         public void SwitchOnSfx(bool isOn)
         {
             isSfxOn = isOn;
-            _mixer.SetFloat(SETTINGS_VOLUME_SFX, Mathf.Log10(currentSfxVolume * (isOn ? 1 : 0.001f)) * 20);
+            _mixer.SetFloat(SETTINGS_VOLUME_SFX, Mathf.Log10(currentSfxVolume * (isOn ? 1 : 0.00001f)) * 20);
         }
 
         #endregion

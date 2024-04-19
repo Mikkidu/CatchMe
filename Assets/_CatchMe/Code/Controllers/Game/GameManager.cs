@@ -11,6 +11,7 @@ namespace AlexDev.CatchMe
 
         private RoomManager _roomManager;
         private MainMenuUI _mainMenuUI;
+        private PlayersBase _playersBase;
 
         #endregion
 

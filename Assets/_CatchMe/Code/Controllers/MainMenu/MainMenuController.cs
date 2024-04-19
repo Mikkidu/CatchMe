@@ -47,8 +47,9 @@ namespace AlexDev.CatchMe
             settingsUI.SfxVolumeChangedEvent += _audioController.SetSfxVolume;
             settingsUI.SettingsSavedEvent += _dataManager.SaveGameSettings;
 
-            _mainMenuUI.RoomNameEnteredEvent += CreateRoom;
-            _mainMenuUI.JoinRandomButtonPresedEvent += _launcher.JoinRandomRoom;
+            _mainMenuUI.NewRoomNameEnteredEvent += CreateRoom;
+            _mainMenuUI.JoinRandomButtonPresedEvent += JoinRandomRoom;
+            _mainMenuUI.JoinRoomNameEnteredEvent += JoinRoom;
 
             _roomsBase = new RoomsBase();
             var roomsTableUI = _mainMenuUI.RoomTable;
@@ -59,6 +60,7 @@ namespace AlexDev.CatchMe
             _launcher.ConnectionStatusChangedEvent += OnIsConnectedChange;
             _launcher.RoomListUpdatedEvent += _roomsBase.RefreshRoomList;
             _launcher.JoinedRoomEvent += CreateGameManager;
+            _launcher.JoinedRoomFiledEvent += _mainMenuUI.ShowMainMenuPanel;
             _launcher.SetPlayerNickName(_dataManager.playerSettings.playerName);
             NetworkStateUI.instance?.AddObservableVariable(_launcher.statusMessages);
 
@@ -90,7 +92,20 @@ namespace AlexDev.CatchMe
         private void CreateRoom(string roomaName)
         {
             Debug.Log("Main menu controller: create room " + roomaName);
+            _mainMenuUI.ShowLoadingScreen();
             _launcher.CreateRoom(roomaName);
+        }
+
+        private void JoinRoom(string roomName)
+        {
+            _mainMenuUI.ShowLoadingScreen();
+            _launcher.JoinRoom(roomName);
+        }
+
+        private void JoinRandomRoom()
+        {
+            _mainMenuUI.ShowLoadingScreen();
+            _launcher.JoinRandomRoom();
         }
 
         private void CreateGameManager()
