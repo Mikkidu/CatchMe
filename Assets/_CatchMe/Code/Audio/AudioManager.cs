@@ -10,27 +10,29 @@ namespace AlexDev.CatchMe.Audio
         #region Public Fields
 
         public static AudioManager instance;
+
         public const string SETTINGS_VOLUME_MUSIC = "MusicVolume";
         public const string SETTINGS_VOLUME_SFX = "SfxVolume";
+
+        public bool isMusicOn { get; private set; } = true;
+        public bool isSfxOn { get; private set; } = true;
+        public float currentMusicVolume { get; private set; }
+        public float currentSfxVolume { get; private set; }
 
         #endregion
 
         #region Private Serialize Fields
 
         [SerializeField] private AudioMixer _mixer;
-        [SerializeField] private AudioSource musicSource;
-        [SerializeField] private AudioSource sfxSource;
-        [SerializeField] public Sound[] sounds;
-        [SerializeField] private Sound[] tracks;
+        [SerializeField] private AudioSource _musicSource;
+        [SerializeField] private AudioSource _sfxSource;
+        [SerializeField] private Sound[] _sounds;
+        [SerializeField] private Sound[] _tracks;
 
         #endregion
 
         #region Private Fields
 
-        private bool isMusicOn = true;
-        private bool isSfxOn = true;
-        private float _currentMusicVolume;
-        private float _currentSfxVolume;
 
         #endregion
 
@@ -63,41 +65,41 @@ namespace AlexDev.CatchMe.Audio
 
         private void PlayMusic(Sound track)
         {
-            musicSource.clip = track.clip;
-            musicSource.Play();
+            _musicSource.clip = track.clip;
+            _musicSource.Play();
         }
 
         public void PlayMusic(string trackName)
         {
-            Sound track = Array.Find(tracks, tracks => tracks.Name == trackName);
+            Sound track = Array.Find(_tracks, tracks => tracks.Name == trackName);
             PlayMusic(track);
         }
 
         public void PlayMusicIfAnother(string trackName)
         {
-            Sound track = Array.Find(tracks, tracks => tracks.Name == trackName);
-            if (track.clip == musicSource.clip)
+            Sound track = Array.Find(_tracks, tracks => tracks.Name == trackName);
+            if (track.clip == _musicSource.clip)
                 return;
             PlayMusic(track);
         }
 
         public void PlaySound(string soundName)
         {
-            Sound sound = Array.Find(sounds, sounds => sounds.Name == soundName);
+            Sound sound = Array.Find(_sounds, sounds => sounds.Name == soundName);
             if (sound != null)
-                sfxSource.PlayOneShot(sound.clip, sound.volume);
+                _sfxSource.PlayOneShot(sound.clip, sound.volume);
         }
 
         public void SetMusicVolume(float volume)
         {
-            _currentMusicVolume = volume;
+            currentMusicVolume = volume;
             if (!isMusicOn) return;
             _mixer.SetFloat(SETTINGS_VOLUME_MUSIC, Mathf.Log10(volume) * 20);
         }
 
         public void SetSFXVolume(float volume)
         {
-            _currentSfxVolume = volume;
+            currentSfxVolume = volume;
             if (!isSfxOn) return;
             _mixer.SetFloat(SETTINGS_VOLUME_SFX, Mathf.Log10(volume) * 20);
         }
@@ -105,13 +107,13 @@ namespace AlexDev.CatchMe.Audio
         public void SwitchOnMusic(bool isOn)
         {
             isMusicOn = isOn;
-            _mixer.SetFloat(SETTINGS_VOLUME_MUSIC, Mathf.Log10(_currentMusicVolume * (isOn ? 1 : 0.001f)) * 20);
+            _mixer.SetFloat(SETTINGS_VOLUME_MUSIC, Mathf.Log10(currentMusicVolume * (isOn ? 1 : 0.00001f)) * 20);
         }
 
         public void SwitchOnSfx(bool isOn)
         {
             isSfxOn = isOn;
-            _mixer.SetFloat(SETTINGS_VOLUME_SFX, Mathf.Log10(_currentSfxVolume * (isOn ? 1 : 0.001f)) * 20);
+            _mixer.SetFloat(SETTINGS_VOLUME_SFX, Mathf.Log10(currentSfxVolume * (isOn ? 1 : 0.00001f)) * 20);
         }
 
         #endregion

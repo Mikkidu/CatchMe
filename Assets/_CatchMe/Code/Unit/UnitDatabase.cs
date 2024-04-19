@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
@@ -7,28 +8,41 @@ namespace AlexDev.CatchMe
 {
     public class UnitDatabase : MonoBehaviour
     {
-        public TextMeshProUGUI[] debugTexts;
-        public static UnitDataElement[] unitsBase { get; private set; }
+        #region Serialize private fields
 
+        [SerializeField] private TextMeshProUGUI[] debugTexts;
+
+        #endregion
+
+        #region Public Fields
+
+        public static List<UnitDataElement> unitsBase { get; private set; }
+        public static event Action<Transform> OnTargedChanged;
+
+        #endregion
+
+        #region Private Fields
 
         private int _unitsCount;
         private int _currentindex = 0;
         private float _distanceDelay = 2f;
 
-        public static event Action<Transform> OnTargedChanged;
+        #endregion
+
 
         private void Start()
         {
             _unitsCount = transform.childCount;
-            unitsBase = new UnitDataElement[_unitsCount];
-
+            unitsBase = new List<UnitDataElement>();
             for (int i = 0; i < _unitsCount; i++)
             {
                 var unitTransform = transform.GetChild(i).transform;
-                unitsBase[i] = new UnitDataElement(unitTransform, unitTransform.GetComponent<UnitController>() != null);
+                if (unitTransform.TryGetComponent<Tagging>(out var tag))
+                    unitsBase.Add(new UnitDataElement(unitTransform, unitTransform.GetComponent<UnitController>() != null));
             }
         }
 
+        #region MonoBehaviour Methods
 
         void Update()
         {
@@ -52,11 +66,50 @@ namespace AlexDev.CatchMe
 
         private void UpdateUI()
         {
-            for (int i = 0; i < unitsBase.Length; i++)
+            if (debugTexts.Length == 0) return;
+            for (int i = 0; i < unitsBase.Count; i++)
             {
-                debugTexts[i]?.SetText($"{unitsBase[i].unitTransform.gameObject.name} distance: {unitsBase[i].distanceToTagger : 0.0}");
+                debugTexts[i].SetText($"{unitsBase[i].unitTransform.gameObject.name} distance: {unitsBase[i].distanceToTagger : 0.0}");
             }
         }
+
+        #endregion
+
+        #region Public Methods
+
+        public void AddUnit(Transform unitTransform)
+        {
+            if (unitTransform.TryGetComponent<Tagging>(out var tag))
+            {
+                unitsBase.Add(new UnitDataElement(unitTransform, unitTransform.GetComponent<UnitController>() != null));
+                unitTransform.parent = transform;
+            }
+        }
+
+        public static Transform GetTarget()
+        {
+            if (unitsBase != null && unitsBase.Count > 1)
+            {
+                return unitsBase[1].unitTransform;
+            }
+            return null;
+        }
+
+        public static void SetTagger(Transform taggerTransform)
+        {
+            for (int i = 1; i < unitsBase.Count; i++)
+            {
+                if (unitsBase[i].unitTransform == taggerTransform)
+                {
+                    ChangeUnitsInBase(0, i);
+                    return;
+                }
+            }
+        }
+
+        #endregion
+
+        #region Private Methods
 
         private float GetDistanceTo(Vector3 targetPosition)
         {
@@ -79,26 +132,6 @@ namespace AlexDev.CatchMe
             return distance;
         }
 
-        public static Transform GetTarget()
-        {
-            if (unitsBase != null && unitsBase.Length > 1)
-            {
-                return unitsBase[1].unitTransform;
-            }
-            return null;
-        }
-
-        public static void SetTagger(Transform taggerTransform)
-        {
-            for (int i = 1; i < unitsBase.Length; i++)
-            {
-                if (unitsBase[i].unitTransform == taggerTransform)
-                {
-                    ChangeUnitsInBase(0, i);
-                    return;
-                }
-            }
-        }
 
         private void UpdateUnitsArray(int unitToCheckIndex)
         {
@@ -111,7 +144,7 @@ namespace AlexDev.CatchMe
                     return;
                 }
             }
-            if (unitToCheckIndex < unitsBase.Length - 1)
+            if (unitToCheckIndex < unitsBase.Count - 1)
             {
                 if (unitsBase[unitToCheckIndex].distanceToTagger - _distanceDelay > unitsBase[unitToCheckIndex + 1].distanceToTagger)
                 {
@@ -134,6 +167,8 @@ namespace AlexDev.CatchMe
         {
             OnTargedChanged?.Invoke(unitsBase[2].unitTransform);
         }
+
+        #endregion
 
         //public static bool GetPath(NavMeshPath path, Vector3 fromPos, Vector3 toPos, int passableMask)
         //{

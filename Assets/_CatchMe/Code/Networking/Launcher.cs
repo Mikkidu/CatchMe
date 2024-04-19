@@ -39,6 +39,8 @@ namespace AlexDev.Networking
 
         #region Events
 
+        public event Action JoinedRoomEvent;
+        public event Action JoinedRoomFiledEvent;
         public event Action<bool> ConnectionStatusChangedEvent;
         public event Action<List<RoomInfo>> RoomListUpdatedEvent;
 
@@ -64,7 +66,7 @@ namespace AlexDev.Networking
         #region MonoBehaviourPunCallbacks Callbacks
 
         public override void OnConnectedToMaster()
-        {
+        {   
             PhotonNetwork.JoinLobby();
         }
 
@@ -85,13 +87,21 @@ namespace AlexDev.Networking
         {
             statusMessages.Value = "<color=#ff0000ff>Can't join random room</color>";
             Debug.Log("PUN Basics Tutorial/Launcher:OnJoinRandomFailed() was called by PUN. No random room available, so we create one.\nCalling: PhotonNetwork.CreateRoom");
-
+            JoinedRoomFiledEvent?.Invoke();
             // #Critical: we failed to join a random room, maybe none exists or they are all full. No worries, we create a new room.
             //PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayersPerRoom });
         }
 
+        public override void OnJoinRoomFailed(short returnCode, string message)
+        {
+            statusMessages.Value = "<color=#ff0000ff>Can't join room</color>" + message;
+            Debug.Log("PUN Basics Tutorial/Launcher:OnJoinFailed() was called by PUN. No room available with this name.");
+            JoinedRoomFiledEvent?.Invoke();
+        }
+
         public override void OnJoinedRoom()
         {
+            JoinedRoomEvent?.Invoke();
             statusMessages.Value = "Joined room";
             Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
         }
@@ -140,6 +150,11 @@ namespace AlexDev.Networking
         public void CreateRoom(string roomName)
         {
             PhotonNetwork.CreateRoom(roomName, new RoomOptions { MaxPlayers = maxPlayersPerRoom, IsOpen = true, PublishUserId = true });
+        }
+
+        public void JoinRoom(string roomName)
+        {
+            PhotonNetwork.JoinRoom(roomName);
         }
 
         #endregion

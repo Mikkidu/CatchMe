@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: New Avatar Mask
+  m_Mask: 00000000010000000100000000000000000000000100000001000000010000000100000000000000000000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: bind_office_m_rival_hips01
+    m_Weight: 1
+  - m_Path: bind_office_m_rival_hips01/bind_office_m_rival_l_thigh01
+    m_Weight: 1
+  - m_Path: bind_office_m_rival_hips01/bind_office_m_rival_l_thigh01/bind_office_m_rival_l_calf01
+    m_Weight: 1
+  - m_Path: bind_office_m_rival_hips01/bind_office_m_rival_l_thigh01/bind_office_m_rival_l_calf01/bind_office_m_rival_l_foot01
+    m_Weight: 1
+  - m_Path: bind_office_m_rival_hips01/bind_office_m_rival_l_thigh01/bind_office_m_rival_l_calf01/bind_office_m_rival_l_foot01/be_office_m_rival_l_toes01
+    m_Weight: 1
+  - m_Path: bind_office_m_rival_hips01/bind_office_m_rival_r_thigh01
+    m_Weight: 1
+  - m_Path: bind_office_m_rival_hips01/bind_office_m_rival_r_thigh01/bind_office_m_rival_r_calf01
+    m_Weight: 1
+  - m_Path: bind_office_m_rival_hips01/bind_office_m_rival_r_thigh01/bind_office_m_rival_r_calf01/bind_office_m_rival_r_foot01
+    m_Weight: 1
+  - m_Path: bind_office_m_rival_hips01/bind_office_m_rival_r_thigh01/bind_office_m_rival_r_calf01/bind_office_m_rival_r_foot01/be_office_m_rival_r_toes01
+    m_Weight: 1
+  - m_Path: bind_office_m_rival_hips01/bind_office_m_rival_spine_a01
+    m_Weight: 1
+  - m_Path: bind_office_m_rival_hips01/bind_office_m_rival_spine_a01/bind_office_m_rival_spine_b01
+    m_Weight: 1
+  - m_Path: bind_office_m_rival_hips01/bind_office_m_rival_spine_a01/bind_office_m_rival_spine_b01/bind_office_m_rival_spine_c01
+    m_Weight: 1
+  - m_Path: bind_office_m_rival_hips01/bind_office_m_rival_spine_a01/bind_office_m_rival_spine_b01/bind_office_m_rival_spine_c01/bind_office_m_rival_l_shoulder01
+    m_Weight: 1
+  - m_Path: bind_office_m_rival_hips01/bind_office_m_rival_spine_a01/bind_office_m_rival_spine_b01/bind_office_m_rival_spine_c01/bind_office_m_rival_l_shoulder01/bind_office_m_rival_l_upperarm01
+    m_Weight: 1
+  - m_Path: bind_office_m_rival_hips01/bind_office_m_rival_spine_a01/bind_office_m_rival_spine_b01/bind_office_m_rival_spine_c01/bind_office_m_rival_l_shoulder01/bind_office_m_rival_l_upperarm01/bind_office_m_rival_l_forearm01
+    m_Weight: 1
+  - m_Path: bind_office_m_rival_hips01/bind_office_m_rival_spine_a01/bind_office_m_rival_spine_b01/bind_office_m_rival_spine_c01/bind_office_m_rival_l_shoulder01/bind_office_m_rival_l_upperarm01/bind_office_m_rival_l_forearm01/be_office_m_rival_l_hand01
+    m_Weight: 1
+  - m_Path: bind_office_m_rival_hips01/bind_office_m_rival_spine_a01/bind_office_m_rival_spine_b01/bind_office_m_rival_spine_c01/bind_office_m_rival_neck01
+    m_Weight: 1
+  - m_Path: bind_office_m_rival_hips01/bind_office_m_rival_spine_a01/bind_office_m_rival_spine_b01/bind_office_m_rival_spine_c01/bind_office_m_rival_neck01/bind_office_m_rival_head01
+    m_Weight: 1
+  - m_Path: bind_office_m_rival_hips01/bind_office_m_rival_spine_a01/bind_office_m_rival_spine_b01/bind_office_m_rival_spine_c01/bind_office_m_rival_neck01/bind_office_m_rival_head01/be_office_m_rival_head01
+    m_Weight: 1
+  - m_Path: bind_office_m_rival_hips01/bind_office_m_rival_spine_a01/bind_office_m_rival_spine_b01/bind_office_m_rival_spine_c01/bind_office_m_rival_r_shoulder01
+    m_Weight: 1
+  - m_Path: bind_office_m_rival_hips01/bind_office_m_rival_spine_a01/bind_office_m_rival_spine_b01/bind_office_m_rival_spine_c01/bind_office_m_rival_r_shoulder01/bind_office_m_rival_r_upperarm01
+    m_Weight: 1
+  - m_Path: bind_office_m_rival_hips01/bind_office_m_rival_spine_a01/bind_office_m_rival_spine_b01/bind_office_m_rival_spine_c01/bind_office_m_rival_r_shoulder01/bind_office_m_rival_r_upperarm01/bind_office_m_rival_r_forearm01
+    m_Weight: 1
+  - m_Path: bind_office_m_rival_hips01/bind_office_m_rival_spine_a01/bind_office_m_rival_spine_b01/bind_office_m_rival_spine_c01/bind_office_m_rival_r_shoulder01/bind_office_m_rival_r_upperarm01/bind_office_m_rival_r_forearm01/be_office_m_rival_r_hand01
+    m_Weight: 1
+  - m_Path: mesh_office_m_rival01
+    m_Weight: 1

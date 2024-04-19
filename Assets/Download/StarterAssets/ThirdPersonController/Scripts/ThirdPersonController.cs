@@ -1,4 +1,5 @@
-﻿ using UnityEngine;
+﻿using Cinemachine;
+using UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
 #endif
@@ -129,13 +130,16 @@ namespace StarterAssets
             if (_mainCamera == null)
             {
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+                
+
             }
         }
 
         private void Start()
         {
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
-            
+            GameObject.FindFirstObjectByType<CinemachineVirtualCamera>().Follow = CinemachineCameraTarget.transform;
+            GameObject.FindFirstObjectByType<UICanvasControllerInput>().starterAssetsInputs = GetComponent<StarterAssetsInputs>();
             _hasAnimator = TryGetComponent(out _animator);
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
