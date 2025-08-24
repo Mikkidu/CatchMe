@@ -13,7 +13,7 @@ namespace AlexDev.CatchMe.Data
         #region PublicFields
 
         public GameSettingsData gameSettings { get; private set; }
-        public PlayerSettingsData playerSettings { get; private set; }
+        public PlayerData playerSettings { get; private set; }
         public bool isNewPlayerData = false;
 
         #endregion
@@ -62,13 +62,13 @@ namespace AlexDev.CatchMe.Data
 
         public void LoadPlayerSettings()
         {
-            if (TryLoadData<PlayerSettingsData>(PLAYER_SETTINGS_FILE_NAME, out var loadedData))
+            if (TryLoadData<PlayerData>(PLAYER_SETTINGS_FILE_NAME, out var loadedData))
             {
                 playerSettings = loadedData;
             }
             else
             {
-                playerSettings = new PlayerSettingsData();
+                playerSettings = new PlayerData();
                 isNewPlayerData = true;
             }
         }

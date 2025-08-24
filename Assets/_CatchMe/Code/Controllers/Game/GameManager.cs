@@ -11,6 +11,7 @@ namespace AlexDev.CatchMe
 
         private RoomManager _roomManager;
         private MainMenuUI _mainMenuUI;
+        private GameUI _gameUI;
         private PlayersBase _playersBase;
 
         #endregion
@@ -31,6 +32,7 @@ namespace AlexDev.CatchMe
             _roomManager.RoomLeftEvent += LoadMainMenu;
             _mainMenuUI.StartGameButtonPressedEvent += LoadGameScene;
             _mainMenuUI.LeaveRoomButtonPressedEvent += CloseRoomInMainMenu;
+            _playersBase = new PlayersBase(_roomManager.GetPlayersInRoom());
             if (GameUI.IsInitialized)
             {
                 OnGameSceneLoaded();
@@ -63,6 +65,7 @@ namespace AlexDev.CatchMe
 
         private void OnGameSceneLoaded()
         {
+            _gameUI = GameUI.instance;
             SpawnManager.instance.SpawnPlayer(0);
             SubscribeForGameObjects();
         }

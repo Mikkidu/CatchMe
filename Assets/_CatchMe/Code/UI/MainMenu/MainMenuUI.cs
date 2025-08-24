@@ -119,8 +119,7 @@ namespace AlexDev.CatchMe.UI
         public void ShowRoomUI()
         {
             _loadingScreen.SetActive(false);
-            _roomMenuUI.gameObject.SetActive(true);
-            _roomTableUI.gameObject.SetActive(true);
+            _roomMenuUI.transform.parent.gameObject.SetActive(true);
         }
 
         public void ShowMainMenuPanel()
